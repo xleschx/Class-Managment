@@ -12,10 +12,4 @@ For detailed information on the API endpoints and their usage, please refer to t
 
 ## Getting Started
 
-To get started with the project, follow these steps:
-
-1. Clone the repository.
-2. Install the project dependencies using `npm install`.
-3. Configure the MongoDB connection in the `db.js` file.
-4. Start the server using `npm start`.
-5. Access the application using the provided URL.
+To get started with the project, follow the steps outlined in the [Start Project Guide](start-project.md).
