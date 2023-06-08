@@ -22,46 +22,36 @@ const createDatabase = async () => {
     console.log('Database and collections created successfully.');
 
     // Create sample classes
-    const class1 = new Class({
-      name: 'Class 1',
-      room: 'Room A',
-      location: 'Building 1',
-      gradeLevel: 'Grade 5',
-    });
-    await class1.save();
-
-    const class2 = new Class({
-      name: 'Class 2',
-      room: 'Room B',
-      location: 'Building 2',
-      gradeLevel: 'Grade 6',
-    });
-    await class2.save();
+    const classes = [];
+    for (let i = 1; i <= 10; i++) {
+      const classData = {
+        name: `Class ${i}`,
+        room: `Room ${i}`,
+        location: `Building ${i}`,
+        gradeLevel: `Grade ${i}`,
+      };
+      const newClass = new Class(classData);
+      await newClass.save();
+      classes.push(newClass);
+    }
 
     // Create sample students
-    const student1 = new Student({
-      name: 'John Doe',
-      subName: 'Doe',
-      birthdate: new Date(2005, 3, 15),
-      address: '123 Main Street',
-      homeAddress: '456 Elm Street',
-      nationality: 'USA',
-      legalGuardian: 'Jane Doe',
-      classId: class1._id,
-    });
-    await student1.save();
-
-    const student2 = new Student({
-      name: 'Jane Smith',
-      subName: 'Smith',
-      birthdate: new Date(2006, 7, 10),
-      address: '789 Oak Avenue',
-      homeAddress: '321 Maple Drive',
-      nationality: 'USA',
-      legalGuardian: 'John Smith',
-      classId: class2._id,
-    });
-    await student2.save();
+    const students = [];
+    for (let i = 1; i <= 10; i++) {
+      const studentData = {
+        name: `Student ${i}`,
+        subName: `SubName ${i}`,
+        birthdate: new Date(2000, i % 12, i),
+        address: `Address ${i}`,
+        homeAddress: `Home Address ${i}`,
+        nationality: `Nationality ${i}`,
+        legalGuardian: `Legal Guardian ${i}`,
+        classId: classes[i - 1]._id,
+      };
+      const newStudent = new Student(studentData);
+      await newStudent.save();
+      students.push(newStudent);
+    }
 
     console.log('Sample classes and students created successfully.');
   } catch (error) {
