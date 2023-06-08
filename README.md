@@ -1,21 +1,21 @@
-### Install MongoDB
-- Install MongoDB by downloading it from the official MongoDB website (https://www.mongodb.com/try/download) and following the installation instructions for your operating system.
+# School Project - Module 165
 
-### Start MongoDB
-- Open a new terminal or command prompt and start the MongoDB server by running the `mongod` command. This will start the MongoDB service on your local machine.
+This project is part of Module 165 in our school curriculum. It is being developed under the guidance of teacher G. Yilmaz. The project team consists of Levin and Ilay.
 
-### Set up the server
-- Navigate to the `server/models` directory in your terminal or command prompt.
-- Run the command `npm install` to install the required dependencies mentioned in the `package.json` file.
-- Once the installation is complete, run the command `node createDatabase.js` to create the database, collections, and sample data.
+## Project Description
 
-### Start the server
-- In a separate terminal or command prompt, navigate to the root directory of your server application.
-- Run the command `npm install` to install the required dependencies.
-- Once the installation is complete, run the command `node server.js` to start the server.
+The purpose of this project is to create a web application for managing classes and students. The application provides a RESTful API for performing CRUD (Create, Read, Update, Delete) operations on classes and students. It is built using the Express.js framework and MongoDB for data storage.
 
-### Set up the frontend
-- Open a new terminal or command prompt and navigate to the `client` directory in your application.
-- Run the command `npm install` to install the required dependencies.
-- Once the installation is complete, run the command `npm start` to start the frontend development server.
+## API Documentation
 
+For detailed information on the API endpoints and their usage, please refer to the [API Documentation](api-documentation.md) file.
+
+## Getting Started
+
+To get started with the project, follow these steps:
+
+1. Clone the repository.
+2. Install the project dependencies using `npm install`.
+3. Configure the MongoDB connection in the `db.js` file.
+4. Start the server using `npm start`.
+5. Access the application using the provided URL.

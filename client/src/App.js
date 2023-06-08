@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getClasses, createClass, updateClass, deleteClass, getStudents, createStudent, updateStudent, deleteStudent } from './api';
 
-function App() {
+const App = () => {
   const [classes, setClasses] = useState([]);
   const [students, setStudents] = useState([]);
-  const [classForm, setClassForm] = useState({ name: '', room: '', location: '', gradeLevel: '' });
-  const [studentForm, setStudentForm] = useState({ name: '', subName: '', birthdate: '', address: '', homeAddress: '', nationality: '', legalGuardian: '', classId: '' });
-
-  useEffect(() => {
-    fetchClasses();
-    fetchStudents();
-  }, []);
+  const [newClassName, setNewClassName] = useState('');
+  const [newClassGrade, setNewClassGrade] = useState('');
+  const [newStudentName, setNewStudentName] = useState('');
+  const [newStudentNationality, setNewStudentNationality] = useState('');
 
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('/api/classes');
-      setClasses(response.data);
+      const classes = await getClasses();
+      setClasses(classes);
     } catch (error) {
       console.error('Error fetching classes:', error);
     }
@@ -23,174 +20,179 @@ function App() {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('/api/students');
-      setStudents(response.data);
+      const students = await getStudents();
+      setStudents(students);
     } catch (error) {
       console.error('Error fetching students:', error);
     }
   };
 
-  const createClass = async (e) => {
-    e.preventDefault();
+  const handleCreateClass = async () => {
     try {
-      const response = await axios.post('/api/classes', classForm);
-      setClasses([...classes, response.data]);
-      setClassForm({ name: '', room: '', location: '', gradeLevel: '' });
+      const newClass = await createClass({
+        name: newClassName,
+        gradeLevel: newClassGrade,
+      });
+      setClasses([...classes, newClass]);
+      setNewClassName('');
+      setNewClassGrade('');
     } catch (error) {
       console.error('Error creating class:', error);
     }
   };
 
-  const createStudent = async (e) => {
-    e.preventDefault();
+  const handleCreateStudent = async () => {
     try {
-      const response = await axios.post('/api/students', studentForm);
-      setStudents([...students, response.data]);
-      setStudentForm({ name: '', subName: '', birthdate: '', address: '', homeAddress: '', nationality: '', legalGuardian: '', classId: '' });
+      const newStudent = await createStudent({
+        name: newStudentName,
+        nationality: newStudentNationality,
+      });
+      setStudents([...students, newStudent]);
+      setNewStudentName('');
+      setNewStudentNationality('');
     } catch (error) {
       console.error('Error creating student:', error);
     }
   };
 
+  const handleUpdateClass = async (classId, updatedName, updatedGrade) => {
+    try {
+      await updateClass(classId, {
+        name: updatedName,
+        gradeLevel: updatedGrade,
+      });
+      const updatedClasses = classes.map((cls) => {
+        if (cls._id === classId) {
+          return { ...cls, name: updatedName, gradeLevel: updatedGrade };
+        }
+        return cls;
+      });
+      setClasses(updatedClasses);
+    } catch (error) {
+      console.error('Error updating class:', error);
+    }
+  };
+
+  const handleUpdateStudent = async (studentId, updatedName, updatedNationality) => {
+    try {
+      await updateStudent(studentId, {
+        name: updatedName,
+        nationality: updatedNationality,
+      });
+      const updatedStudents = students.map((student) => {
+        if (student._id === studentId) {
+          return { ...student, name: updatedName, nationality: updatedNationality };
+        }
+        return student;
+      });
+      setStudents(updatedStudents);
+    } catch (error) {
+      console.error('Error updating student:', error);
+    }
+  };
+
+  const handleDeleteClass = async (classId) => {
+    try {
+      await deleteClass(classId);
+      const filteredClasses = classes.filter((cls) => cls._id !== classId);
+      setClasses(filteredClasses);
+    } catch (error) {
+      console.error('Error deleting class:', error);
+    }
+  };
+
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      await deleteStudent(studentId);
+      const filteredStudents = students.filter((student) => student._id !== studentId);
+      setStudents(filteredStudents);
+    } catch (error) {
+      console.error('Error deleting student:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchClasses();
+    fetchStudents();
+  }, []);
+
   return (
     <div>
       <h2>Classes</h2>
+      <div>
+        <input
+          type="text"
+          placeholder="Class Name"
+          value={newClassName}
+          onChange={(e) => setNewClassName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Grade Level"
+          value={newClassGrade}
+          onChange={(e) => setNewClassGrade(e.target.value)}
+        />
+        <button onClick={handleCreateClass}>Create Class</button>
+      </div>
       <ul>
-        {classes.map((classItem) => (
-          <li key={classItem._id}>
-            {classItem.name} - {classItem.gradeLevel}
+        {classes.map((cls) => (
+          <li key={cls._id}>
+            {cls.name} - {cls.gradeLevel}
+            <div>
+              <input
+                type="text"
+                placeholder="Updated Name"
+                onChange={(e) => handleUpdateClass(cls._id, e.target.value, cls.gradeLevel)}
+              />
+              <input
+                type="text"
+                placeholder="Updated Grade"
+                onChange={(e) => handleUpdateClass(cls._id, cls.name, e.target.value)}
+              />
+              <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
 
       <h2>Students</h2>
+      <div>
+        <input
+          type="text"
+          placeholder="Student Name"
+          value={newStudentName}
+          onChange={(e) => setNewStudentName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Nationality"
+          value={newStudentNationality}
+          onChange={(e) => setNewStudentNationality(e.target.value)}
+        />
+        <button onClick={handleCreateStudent}>Create Student</button>
+      </div>
       <ul>
         {students.map((student) => (
           <li key={student._id}>
-            {student.name} {student.subName} - {student.birthdate}
+            {student.name} - {student.nationality}
+            <div>
+              <input
+                type="text"
+                placeholder="Updated Name"
+                onChange={(e) => handleUpdateStudent(student._id, e.target.value, student.nationality)}
+              />
+              <input
+                type="text"
+                placeholder="Updated Nationality"
+                onChange={(e) => handleUpdateStudent(student._id, student.name, e.target.value)}
+              />
+              <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
-
-      <h2>Create Class</h2>
-      <form onSubmit={createClass}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={classForm.name}
-            onChange={(e) => setClassForm({ ...classForm, name: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Room:
-          <input
-            type="text"
-            value={classForm.room}
-            onChange={(e) => setClassForm({ ...classForm, room: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Location:
-          <input
-            type="text"
-            value={classForm.location}
-            onChange={(e) => setClassForm({ ...classForm, location: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Grade Level:
-          <input
-            type="text"
-            value={classForm.gradeLevel}
-            onChange={(e) => setClassForm({ ...classForm, gradeLevel: e.target.value })}
-          />
-        </label>
-        <br />
-        <button type="submit">Create Class</button>
-      </form>
-
-      <h2>Create Student</h2>
-      <form onSubmit={createStudent}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={studentForm.name}
-            onChange={(e) => setStudentForm({ ...studentForm, name: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Sub Name:
-          <input
-            type="text"
-            value={studentForm.subName}
-            onChange={(e) => setStudentForm({ ...studentForm, subName: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Birthdate:
-          <input
-            type="text"
-            value={studentForm.birthdate}
-            onChange={(e) => setStudentForm({ ...studentForm, birthdate: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Address:
-          <input
-            type="text"
-            value={studentForm.address}
-            onChange={(e) => setStudentForm({ ...studentForm, address: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Home Address:
-          <input
-            type="text"
-            value={studentForm.homeAddress}
-            onChange={(e) => setStudentForm({ ...studentForm, homeAddress: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Nationality:
-          <input
-            type="text"
-            value={studentForm.nationality}
-            onChange={(e) => setStudentForm({ ...studentForm, nationality: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Legal Guardian:
-          <input
-            type="text"
-            value={studentForm.legalGuardian}
-            onChange={(e) => setStudentForm({ ...studentForm, legalGuardian: e.target.value })}
-          />
-        </label>
-        <br />
-        <label>
-          Class ID:
-          <input
-            type="text"
-            value={studentForm.classId}
-            onChange={(e) => setStudentForm({ ...studentForm, classId: e.target.value })}
-          />
-        </label>
-        <br />
-        <button type="submit">Create Student</button>
-      </form>
     </div>
   );
-}
+};
 
 export default App;

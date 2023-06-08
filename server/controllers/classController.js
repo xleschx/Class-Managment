@@ -16,10 +16,61 @@ exports.getAllClasses = async (req, res) => {
 // Create a class
 exports.createClass = async (req, res) => {
   try {
-    const newClass = await Class.create(req.body);
+    const { name, room, location, gradeLevel } = req.body;
+
+    const newClass = new Class({
+      name,
+      room,
+      location,
+      gradeLevel,
+    });
+
+    await newClass.save();
+
     res.status(201).json(newClass);
   } catch (error) {
     console.error('Error creating class:', error);
     res.status(500).json({ error: 'Failed to create class' });
+  }
+};
+
+// Update a class
+exports.updateClass = async (req, res) => {
+  try {
+    const classId = req.params.id;
+    const { name, room, location, gradeLevel } = req.body;
+
+    const updatedClass = await Class.findByIdAndUpdate(
+      classId,
+      { name, room, location, gradeLevel },
+      { new: true }
+    );
+
+    if (!updatedClass) {
+      return res.status(404).json({ error: 'Class not found' });
+    }
+
+    res.json(updatedClass);
+  } catch (error) {
+    console.error('Error updating class:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Delete a class
+exports.deleteClass = async (req, res) => {
+  try {
+    const classId = req.params.id;
+
+    const deletedClass = await Class.findByIdAndDelete(classId);
+
+    if (!deletedClass) {
+      return res.status(404).json({ error: 'Class not found' });
+    }
+
+    res.json({ message: 'Class deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting class:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };

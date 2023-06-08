@@ -1,8 +1,6 @@
-// server.js
-
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const connectDB = require('./db');
 const routes = require('./routes');
 
 const app = express();
@@ -13,18 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose
-  .connect('mongodb://localhost:27017/mydatabase', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    family: 4,
-  })
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Failed to connect to MongoDB', error);
-  });
+connectDB();
 
 // Routes
 app.use('/api', routes);
