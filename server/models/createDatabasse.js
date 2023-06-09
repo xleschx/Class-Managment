@@ -11,6 +11,10 @@ const createDatabase = async () => {
       family: 4,
     });
 
+    // Drop the existing database if it exists
+    await mongoose.connection.db.dropDatabase();
+    console.log('Existing database dropped successfully.');
+
     // Create collections and their attributes
     await Class.createCollection();
     await Student.createCollection();
@@ -29,6 +33,7 @@ const createDatabase = async () => {
         room: `Room ${i}`,
         location: `Building ${i}`,
         gradeLevel: `Grade ${i}`,
+        students: [], // Initialize an empty array for students
       };
       const newClass = new Class(classData);
       await newClass.save();
@@ -38,19 +43,23 @@ const createDatabase = async () => {
     // Create sample students
     const students = [];
     for (let i = 1; i <= 10; i++) {
+      const classIndex = i % 10; // Use modulus to assign students to classes in a cyclic manner
       const studentData = {
         name: `Student ${i}`,
         subName: `SubName ${i}`,
         birthdate: new Date(2000, i % 12, i),
-        address: `Address ${i}`,
         homeAddress: `Home Address ${i}`,
         nationality: `Nationality ${i}`,
         legalGuardian: `Legal Guardian ${i}`,
-        classId: classes[i - 1]._id,
+        classId: classes[classIndex]._id,
       };
       const newStudent = new Student(studentData);
       await newStudent.save();
       students.push(newStudent);
+
+      // Update the students array in the associated class
+      classes[classIndex].students.push(newStudent);
+      await classes[classIndex].save();
     }
 
     console.log('Sample classes and students created successfully.');

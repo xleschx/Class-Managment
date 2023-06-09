@@ -15,13 +15,12 @@ exports.getAllStudents = async (req, res) => {
 // Create a student
 exports.createStudent = async (req, res) => {
   try {
-    const { name, subName, birthdate, address, homeAddress, nationality, legalGuardian, classId } = req.body;
+    const { name, subName, birthdate, homeAddress, nationality, legalGuardian, classId } = req.body;
 
     const newStudent = new Student({
       name,
       subName,
       birthdate,
-      address,
       homeAddress,
       nationality,
       legalGuardian,
@@ -52,11 +51,11 @@ exports.createStudent = async (req, res) => {
 exports.updateStudent = async (req, res) => {
   try {
     const studentId = req.params.id;
-    const { name, subName, birthdate, address, homeAddress, nationality, legalGuardian, classId } = req.body;
+    const { name, subName, birthdate, homeAddress, nationality, legalGuardian, classId } = req.body;
 
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
-      { name, subName, birthdate, address, homeAddress, nationality, legalGuardian, classId },
+      { name, subName, birthdate, homeAddress, nationality, legalGuardian, classId },
       { new: true }
     );
 

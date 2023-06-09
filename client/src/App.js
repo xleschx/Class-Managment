@@ -11,7 +11,6 @@ const App = () => {
   const [newStudentName, setNewStudentName] = useState('');
   const [newStudentSubName, setNewStudentSubName] = useState('');
   const [newStudentBirthdate, setNewStudentBirthdate] = useState('');
-  const [newStudentAddress, setNewStudentAddress] = useState('');
   const [newStudentHomeAddress, setNewStudentHomeAddress] = useState('');
   const [newStudentNationality, setNewStudentNationality] = useState('');
   const [newStudentLegalGuardian, setNewStudentLegalGuardian] = useState('');
@@ -62,32 +61,31 @@ const App = () => {
     }
   };
 
-  // Create a new student
-  const handleCreateStudent = async () => {
-    try {
-      const newStudent = await createStudent({
-        name: newStudentName,
-        subName: newStudentSubName,
-        birthdate: newStudentBirthdate,
-        address: newStudentAddress,
-        homeAddress: newStudentHomeAddress,
-        nationality: newStudentNationality,
-        legalGuardian: newStudentLegalGuardian,
-        classId: selectedClassId,
-      });
-      setStudents([...students, newStudent]);
-      setNewStudentName('');
-      setNewStudentSubName('');
-      setNewStudentBirthdate('');
-      setNewStudentAddress('');
-      setNewStudentHomeAddress('');
-      setNewStudentNationality('');
-      setNewStudentLegalGuardian('');
-      setSelectedClassId('');
-    } catch (error) {
-      console.error('Error creating student:', error);
-    }
-  };
+// Create a new student
+const handleCreateStudent = async () => {
+  try {
+    const newStudent = await createStudent({
+      name: newStudentName,
+      subName: newStudentSubName,
+      birthdate: new Date(newStudentBirthdate), // Convert to Date object
+      homeAddress: newStudentHomeAddress,
+      nationality: newStudentNationality,
+      legalGuardian: newStudentLegalGuardian,
+      classId: selectedClassId,
+    });
+    setStudents([...students, newStudent]);
+    setNewStudentName('');
+    setNewStudentSubName('');
+    setNewStudentBirthdate('');
+    setNewStudentHomeAddress('');
+    setNewStudentNationality('');
+    setNewStudentLegalGuardian('');
+    setSelectedClassId('');
+  } catch (error) {
+    console.error('Error creating student:', error);
+  }
+};
+
 
   // Update a class
   const handleUpdateClass = async (classId, updatedName, updatedRoom, updatedLocation, updatedGrade) => {
@@ -105,13 +103,13 @@ const App = () => {
   };
 
   // Update a student
-  const handleUpdateStudent = async (studentId, updatedName, updatedSubName, updatedBirthdate, updatedAddress, updatedHomeAddress, updatedNationality, updatedLegalGuardian) => {
+  const handleUpdateStudent = async (studentId, updatedName, updatedSubName, updatedBirthdate, updatedHomeAddress, updatedNationality, updatedLegalGuardian) => {
     try {
       await updateStudent(studentId, {
         name: updatedName,
         subName: updatedSubName,
         birthdate: updatedBirthdate,
-        address: updatedAddress,
+
         homeAddress: updatedHomeAddress,
         nationality: updatedNationality,
         legalGuardian: updatedLegalGuardian,
@@ -155,7 +153,6 @@ const App = () => {
       <input type="text" placeholder="Name" value={newStudentName} onChange={(e) => setNewStudentName(e.target.value)} />
       <input type="text" placeholder="Sub Name" value={newStudentSubName} onChange={(e) => setNewStudentSubName(e.target.value)} />
       <input type="date" placeholder="Birthdate" value={newStudentBirthdate} onChange={(e) => setNewStudentBirthdate(e.target.value)} />
-      <input type="text" placeholder="Address" value={newStudentAddress} onChange={(e) => setNewStudentAddress(e.target.value)} />
       <input type="text" placeholder="Home Address" value={newStudentHomeAddress} onChange={(e) => setNewStudentHomeAddress(e.target.value)} />
       <input type="text" placeholder="Nationality" value={newStudentNationality} onChange={(e) => setNewStudentNationality(e.target.value)} />
       <input type="text" placeholder="Legal Guardian" value={newStudentLegalGuardian} onChange={(e) => setNewStudentLegalGuardian(e.target.value)} />
@@ -168,29 +165,35 @@ const App = () => {
       <button onClick={handleCreateStudent}>Create</button>
 
       <h2>Classes</h2>
-      {classes.map((cls) => (
-        <div key={cls._id}>
-          <input type="text" value={cls.name} onChange={(e) => handleUpdateClass(cls._id, e.target.value, cls.room, cls.location, cls.gradeLevel)} />
-          <input type="text" value={cls.room} onChange={(e) => handleUpdateClass(cls._id, cls.name, e.target.value, cls.location, cls.gradeLevel)} />
-          <input type="text" value={cls.location} onChange={(e) => handleUpdateClass(cls._id, cls.name, cls.room, e.target.value, cls.gradeLevel)} />
-          <input type="text" value={cls.gradeLevel} onChange={(e) => handleUpdateClass(cls._id, cls.name, cls.room, cls.location, e.target.value)} />
-          <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
-        </div>
-      ))}
+      <ul>
+        {classes.map((cls) => (
+          <li key={cls._id}>
+            <h3>{cls.name}</h3>
+            <p>Room: {cls.room}</p>
+            <p>Location: {cls.location}</p>
+            <p>Grade Level: {cls.gradeLevel}</p>
+            <button onClick={() => handleUpdateClass(cls._id, `Updated ${cls.name}`, cls.room, cls.location, cls.gradeLevel)}>Update</button>
+            <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
 
-      <h2>Students</h2>
-      {students.map((student) => (
-        <div key={student._id}>
-          <input type="text" value={student.name} onChange={(e) => handleUpdateStudent(student._id, e.target.value, student.subName, student.birthdate, student.address, student.homeAddress, student.nationality, student.legalGuardian)} />
-          <input type="text" value={student.subName} onChange={(e) => handleUpdateStudent(student._id, student.name, e.target.value, student.birthdate, student.address, student.homeAddress, student.nationality, student.legalGuardian)} />
-          <input type="date" value={student.birthdate} onChange={(e) => handleUpdateStudent(student._id, student.name, student.subName, e.target.value, student.address, student.homeAddress, student.nationality, student.legalGuardian)} />
-          <input type="text" value={student.address} onChange={(e) => handleUpdateStudent(student._id, student.name, student.subName, student.birthdate, e.target.value, student.homeAddress, student.nationality, student.legalGuardian)} />
-          <input type="text" value={student.homeAddress} onChange={(e) => handleUpdateStudent(student._id, student.name, student.subName, student.birthdate, student.address, e.target.value, student.nationality, student.legalGuardian)} />
-          <input type="text" value={student.nationality} onChange={(e) => handleUpdateStudent(student._id, student.name, student.subName, student.birthdate, student.address, student.homeAddress, e.target.value, student.legalGuardian)} />
-          <input type="text" value={student.legalGuardian} onChange={(e) => handleUpdateStudent(student._id, student.name, student.subName, student.birthdate, student.address, student.homeAddress, student.nationality, e.target.value)} />
-          <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
-        </div>
-      ))}
+            <ul>
+              {students
+                .filter((student) => student.classId === cls._id)
+                .map((student) => (
+                  <li key={student._id}>
+                    <h4>{student.name}</h4>
+                    <p>Sub Name: {student.subName}</p>
+                    <p>Birthdate: {student.birthdate}</p>
+                    <p>Home Address: {student.homeAddress}</p>
+                    <p>Nationality: {student.nationality}</p>
+                    <p>Legal Guardian: {student.legalGuardian}</p>
+                    <button onClick={() => handleUpdateStudent(student._id, `Updated ${student.name}`, student.subName, student.birthdate, student.homeAddress, student.nationality, student.legalGuardian)}>Update</button>
+                    <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
+                  </li>
+                ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

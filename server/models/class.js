@@ -5,6 +5,12 @@ const classSchema = new mongoose.Schema({
   room: String,
   location: String,
   gradeLevel: String,
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Student',
+    },
+  ],
 });
 
 const Class = mongoose.model('Class', classSchema);
