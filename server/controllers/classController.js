@@ -1,11 +1,9 @@
-// classController.js
-
 const { Class } = require('../models/class');
 
 // Get all classes
 exports.getAllClasses = async (req, res) => {
   try {
-    const classes = await Class.find();
+    const classes = await Class.find().populate('students');
     res.json(classes);
   } catch (error) {
     console.error('Error fetching classes:', error);

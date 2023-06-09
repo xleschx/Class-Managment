@@ -1,11 +1,10 @@
-// studentController.js
-
 const { Student } = require('../models/student');
+const { Class } = require('../models/class');
 
 // Get all students
 exports.getAllStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find().populate('classId');
     res.json(students);
   } catch (error) {
     console.error('Error fetching students:', error);
@@ -30,6 +29,17 @@ exports.createStudent = async (req, res) => {
     });
 
     await newStudent.save();
+
+    // Update the students array in the associated class
+    const updatedClass = await Class.findByIdAndUpdate(
+      classId,
+      { $push: { students: newStudent._id } },
+      { new: true }
+    );
+
+    if (!updatedClass) {
+      return res.status(404).json({ error: 'Class not found' });
+    }
 
     res.status(201).json(newStudent);
   } catch (error) {
@@ -71,6 +81,9 @@ exports.deleteStudent = async (req, res) => {
     if (!deletedStudent) {
       return res.status(404).json({ error: 'Student not found' });
     }
+
+    // Remove the student reference from the associated class
+    await Class.findByIdAndUpdate(deletedStudent.classId, { $pull: { students: deletedStudent._id } });
 
     res.json({ message: 'Student deleted successfully' });
   } catch (error) {
