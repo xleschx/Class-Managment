@@ -69,30 +69,30 @@ const App = () => {
     }
   };
 
-// Create a new student
-const handleCreateStudent = async () => {
-  try {
-    const newStudent = await createStudent({
-      name: newStudentName,
-      subName: newStudentSubName,
-      birthdate: new Date(newStudentBirthdate), // Convert to Date object
-      homeAddress: newStudentHomeAddress,
-      nationality: newStudentNationality,
-      legalGuardian: newStudentLegalGuardian,
-      classId: selectedClassId,
-    });
-    setStudents([...students, newStudent]);
-    setNewStudentName('');
-    setNewStudentSubName('');
-    setNewStudentBirthdate('');
-    setNewStudentHomeAddress('');
-    setNewStudentNationality('');
-    setNewStudentLegalGuardian('');
-    setSelectedClassId('');
-  } catch (error) {
-    console.error('Error creating student:', error);
-  }
-};
+  // Create a new student
+  const handleCreateStudent = async () => {
+    try {
+      const newStudent = await createStudent({
+        name: newStudentName,
+        subName: newStudentSubName,
+        birthdate: new Date(newStudentBirthdate), // Convert to Date object
+        homeAddress: newStudentHomeAddress,
+        nationality: newStudentNationality,
+        legalGuardian: newStudentLegalGuardian,
+        classId: selectedClassId,
+      });
+      setStudents([...students, newStudent]);
+      setNewStudentName('');
+      setNewStudentSubName('');
+      setNewStudentBirthdate('');
+      setNewStudentHomeAddress('');
+      setNewStudentNationality('');
+      setNewStudentLegalGuardian('');
+      setSelectedClassId('');
+    } catch (error) {
+      console.error('Error creating student:', error);
+    }
+  };
 
 
   // Update a class
@@ -184,19 +184,18 @@ const handleCreateStudent = async () => {
             <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
 
             <ul>
-              {fetchStudentsByClassId(cls._id)
-                .map((student) => (
-                  <li key={student._id}>
-                    <h4>{student.name}</h4>
-                    <p>Sub Name: {student.subName}</p>
-                    <p>Birthdate: {student.birthdate}</p>
-                    <p>Home Address: {student.homeAddress}</p>
-                    <p>Nationality: {student.nationality}</p>
-                    <p>Legal Guardian: {student.legalGuardian}</p>
-                    <button onClick={() => handleUpdateStudent(student._id, `Updated ${student.name}`, student.subName, student.birthdate, student.homeAddress, student.nationality, student.legalGuardian)}>Update</button>
-                    <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
-                  </li>
-                ))}
+              {fetchStudentsByClassId(cls._id).map((student) => (
+                <li key={student._id}>
+                  <h4>{student.name}</h4>
+                  <p>Sub Name: {student.subName}</p>
+                  <p>Birthdate: {student.birthdate}</p>
+                  <p>Home Address: {student.homeAddress}</p>
+                  <p>Nationality: {student.nationality}</p>
+                  <p>Legal Guardian: {student.legalGuardian}</p>
+                  <button onClick={() => handleUpdateStudent(student._id, `Updated ${student.name}`, student.subName, student.birthdate, student.homeAddress, student.nationality, student.legalGuardian)}>Update</button>
+                  <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
+                </li>
+              ))}
             </ul>
           </li>
         ))}
