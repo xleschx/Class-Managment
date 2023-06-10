@@ -83,3 +83,13 @@ export const getStudents = async () => {
     throw error;
   }
 };
+
+export const getStudentsByClassId = async (classId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/classes/${classId}/students`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    throw error;
+  }
+};

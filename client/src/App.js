@@ -42,6 +42,14 @@ const App = () => {
     }
   };
 
+  const getStudentsByClassId = async (classId) => {
+    try {
+      return getStudentsByClassId(classId);
+    } catch (error) {
+      console.error('Error fetching students:', error);
+    }
+  };
+
   // Create a new class
   const handleCreateClass = async () => {
     try {
@@ -176,8 +184,8 @@ const handleCreateStudent = async () => {
             <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
 
             <ul>
-              {students
-                .filter((student) => student.classId === cls._id)
+              {getStudentsByClassId(cls._id)
+
                 .map((student) => (
                   <li key={student._id}>
                     <h4>{student.name}</h4>
