@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getClasses, createClass, updateClass, deleteClass, getStudentsByClassId } from '../api/classApi';
 import { getStudents, createStudent, updateStudent, deleteStudent } from '../api/studentApi';
+
 const App = () => {
   const [classes, setClasses] = useState([]);
   const [students, setStudents] = useState([]);
+  const [studentsByClass, setStudentsByClass] = useState({});
+  const [selectedClassId, setSelectedClassId] = useState('');
   const [newClassName, setNewClassName] = useState('');
   const [newClassRoom, setNewClassRoom] = useState('');
   const [newClassLocation, setNewClassLocation] = useState('');
@@ -14,7 +17,6 @@ const App = () => {
   const [newStudentHomeAddress, setNewStudentHomeAddress] = useState('');
   const [newStudentNationality, setNewStudentNationality] = useState('');
   const [newStudentLegalGuardian, setNewStudentLegalGuardian] = useState('');
-  const [selectedClassId, setSelectedClassId] = useState('');
 
   // Fetch classes and students
   useEffect(() => {
@@ -22,15 +24,20 @@ const App = () => {
     fetchStudents();
   }, []);
 
-  // Fetch classes from the server
-  const fetchClasses = async () => {
-    try {
-      const classes = await getClasses();
-      setClasses(classes);
-    } catch (error) {
-      console.error('Error fetching classes:', error);
-    }
-  };
+// Fetch classes from the server
+const fetchClasses = async () => {
+  try {
+    const classes = await getClasses();
+    setClasses(classes);
+    // Fetch students for each class
+    classes.forEach((cls) => {
+      fetchStudentsByClassId(cls._id);
+    });
+  } catch (error) {
+    console.error('Error fetching classes:', error);
+  }
+};
+
 
   // Fetch students from the server
   const fetchStudents = async () => {
@@ -42,13 +49,20 @@ const App = () => {
     }
   };
 
-  const fetchStudentsByClassId = async (classId) => {
-    try {
-      return getStudentsByClassId(classId);
-    } catch (error) {
-      console.error('Error fetching students:', error);
-    }
-  };
+
+
+// Fetch students by class ID from the server
+const fetchStudentsByClassId = async (classId) => {
+  try {
+    const students = await getStudentsByClassId(classId);
+    setStudentsByClass((prevState) => ({
+      ...prevState,
+      [classId]: students,
+    }));
+  } catch (error) {
+    console.error('Error fetching students:', error);
+  }
+};
 
   // Create a new class
   const handleCreateClass = async () => {
@@ -75,7 +89,7 @@ const App = () => {
       const newStudent = await createStudent({
         name: newStudentName,
         subName: newStudentSubName,
-        birthdate: new Date(newStudentBirthdate), // Convert to Date object
+        birthdate: new Date(newStudentBirthdate),
         homeAddress: newStudentHomeAddress,
         nationality: newStudentNationality,
         legalGuardian: newStudentLegalGuardian,
@@ -93,7 +107,6 @@ const App = () => {
       console.error('Error creating student:', error);
     }
   };
-
 
   // Update a class
   const handleUpdateClass = async (classId, updatedName, updatedRoom, updatedLocation, updatedGrade) => {
@@ -117,7 +130,6 @@ const App = () => {
         name: updatedName,
         subName: updatedSubName,
         birthdate: updatedBirthdate,
-
         homeAddress: updatedHomeAddress,
         nationality: updatedNationality,
         legalGuardian: updatedLegalGuardian,
@@ -184,7 +196,7 @@ const App = () => {
             <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
 
             <ul>
-              {fetchStudentsByClassId(cls._id).map((student) => (
+              {studentsByClass[cls._id] && studentsByClass[cls._id].map((student) => (
                 <li key={student._id}>
                   <h4>{student.name}</h4>
                   <p>Sub Name: {student.subName}</p>

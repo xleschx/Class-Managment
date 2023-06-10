@@ -47,6 +47,18 @@ exports.createStudent = async (req, res) => {
   }
 };
 
+// Get all students for a class
+exports.getStudentsForClass = async (req, res) => {
+    try {
+      const classId = req.params.id;
+      const students = await Student.find({ classId });
+      res.json(students);
+    } catch (error) {
+      console.error('Error fetching students for class:', error);
+      res.status(500).json({ error: 'Failed to fetch students' });
+    }
+  };
+
 // Update a student
 exports.updateStudent = async (req, res) => {
   try {
