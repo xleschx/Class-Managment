@@ -82,31 +82,33 @@ const fetchStudentsByClassId = async (classId) => {
       console.error('Error creating class:', error);
     }
   };
+  
+// Create a new student
+const handleCreateStudent = async () => {
+  try {
+    const newStudent = await createStudent({
+      name: newStudentName,
+      subName: newStudentSubName,
+      birthdate: new Date(newStudentBirthdate),
+      homeAddress: newStudentHomeAddress,
+      nationality: newStudentNationality,
+      legalGuardian: newStudentLegalGuardian,
+      classId: selectedClassId,
+    });
+    setStudents([...students, newStudent]);
+    setNewStudentName('');
+    setNewStudentSubName('');
+    setNewStudentBirthdate('');
+    setNewStudentHomeAddress('');
+    setNewStudentNationality('');
+    setNewStudentLegalGuardian('');
 
-  // Create a new student
-  const handleCreateStudent = async () => {
-    try {
-      const newStudent = await createStudent({
-        name: newStudentName,
-        subName: newStudentSubName,
-        birthdate: new Date(newStudentBirthdate),
-        homeAddress: newStudentHomeAddress,
-        nationality: newStudentNationality,
-        legalGuardian: newStudentLegalGuardian,
-        classId: selectedClassId,
-      });
-      setStudents([...students, newStudent]);
-      setNewStudentName('');
-      setNewStudentSubName('');
-      setNewStudentBirthdate('');
-      setNewStudentHomeAddress('');
-      setNewStudentNationality('');
-      setNewStudentLegalGuardian('');
-      setSelectedClassId('');
-    } catch (error) {
-      console.error('Error creating student:', error);
-    }
-  };
+    // Fetch updated students for the selected class
+    fetchStudentsByClassId(selectedClassId);
+  } catch (error) {
+    console.error('Error creating student:', error);
+  }
+};
 
   // Update a class
   const handleUpdateClass = async (classId, updatedName, updatedRoom, updatedLocation, updatedGrade) => {
