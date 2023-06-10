@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getClasses, createClass, updateClass, deleteClass, getStudents, createStudent, updateStudent, deleteStudent } from './api';
-
+import { getClasses, createClass, updateClass, deleteClass, getStudentsByClassId } from '../api/classApi';
+import { getStudents, createStudent, updateStudent, deleteStudent } from '../api/studentApi';
 const App = () => {
   const [classes, setClasses] = useState([]);
   const [students, setStudents] = useState([]);
@@ -42,7 +42,7 @@ const App = () => {
     }
   };
 
-  const getStudentsByClassId = async (classId) => {
+  const fetchStudentsByClassId = async (classId) => {
     try {
       return getStudentsByClassId(classId);
     } catch (error) {
@@ -184,8 +184,7 @@ const handleCreateStudent = async () => {
             <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
 
             <ul>
-              {getStudentsByClassId(cls._id)
-
+              {fetchStudentsByClassId(cls._id)
                 .map((student) => (
                   <li key={student._id}>
                     <h4>{student.name}</h4>
