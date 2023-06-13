@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { Class } = require('./class');
-const { Student } = require('./student');
+const { Class } = require('./models/class');
+const { Student } = require('./models/student');
 
 const createDatabase = async () => {
   try {

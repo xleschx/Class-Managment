@@ -34,6 +34,7 @@ export const deleteStudent = async (studentId) => {
   }
 };
 
+
 export const getStudents = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}`);
