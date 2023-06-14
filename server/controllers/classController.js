@@ -11,6 +11,24 @@ exports.getAllClasses = async (req, res) => {
   }
 };
 
+// Get a class by ID
+exports.getClass = async (req, res) => {
+  try {
+    const classId = req.params.id;
+    const cls = await Class.findById(classId);
+
+    if (!cls) {
+      return res.status(404).json({ error: 'Class not found' });
+    }
+
+    res.json(cls);
+  } catch (error) {
+    console.error('Error fetching class:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 // Create a class
 exports.createClass = async (req, res) => {
   try {
@@ -67,6 +85,9 @@ exports.deleteClass = async (req, res) => {
     if (!deletedClass) {
       return res.status(404).json({ error: 'Class not found' });
     }
+
+    // Remove the student references from the associated class
+    await Class.findByIdAndUpdate(deletedClass._id, { $pull: { students: { $in: deletedClass.students } } });
 
     res.json({ message: 'Class deleted successfully' });
   } catch (error) {
