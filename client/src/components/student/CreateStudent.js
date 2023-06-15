@@ -9,6 +9,11 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
   const [newStudentNationality, setNewStudentNationality] = useState('');
   const [newStudentLegalGuardian, setNewStudentLegalGuardian] = useState('');
   const [selectedClassId, setSelectedClassId] = useState('');
+  const [newStudentAddress, setNewStudentAddress] = useState({
+    plz: '',
+    street: '',
+    city: '',
+  });
 
   const handleCreateStudent = async () => {
     try {
@@ -16,7 +21,7 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
         name: newStudentName,
         subName: newStudentSubName,
         birthdate: new Date(newStudentBirthdate),
-        homeAddress: newStudentHomeAddress,
+        address: newStudentAddress,
         nationality: newStudentNationality,
         legalGuardian: newStudentLegalGuardian,
         classId: selectedClassId,
@@ -55,11 +60,23 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
         value={newStudentBirthdate}
         onChange={(e) => setNewStudentBirthdate(e.target.value)}
       />
+    <input
+        type="text"
+        placeholder="PLZ"
+        value={newStudentAddress.plz}
+        onChange={(e) => setNewStudentAddress({ ...newStudentAddress, plz: e.target.value })}
+      />
       <input
         type="text"
-        placeholder="Home Address"
-        value={newStudentHomeAddress}
-        onChange={(e) => setNewStudentHomeAddress(e.target.value)}
+        placeholder="Street"
+        value={newStudentAddress.street}
+        onChange={(e) => setNewStudentAddress({ ...newStudentAddress, street: e.target.value })}
+      />
+      <input
+        type="text"
+        placeholder="City"
+        value={newStudentAddress.city}
+        onChange={(e) => setNewStudentAddress({ ...newStudentAddress, city: e.target.value })}
       />
       <input
         type="text"
