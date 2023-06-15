@@ -24,7 +24,6 @@ const App = () => {
         console.error('Error fetching classes:', error);
       }
     };
-  
     
   // Fetch classes
   useEffect(() => {
@@ -114,7 +113,22 @@ const App = () => {
       console.error('Error creating student:', error);
     }
   };
-  
+    
+      //Change dateformat to right format
+  const formatedBirthday = (studentBirthdate) => {
+      var d = new Date(studentBirthdate),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+      if (month.length < 2) 
+          month = '0' + month;
+      if (day.length < 2) 
+          day = '0' + day;
+
+      return [year, month, day].join('-');
+  }
+
   return (
     <div>
       <h1>Class Management</h1>
@@ -207,7 +221,7 @@ const App = () => {
                       <>
                         <h4>{student.name}</h4>
                         <p>Sub Name: {student.subName}</p>
-                        <p>Birthdate: {student.birthdate}</p>
+                        <p>Birthdate: {formatedBirthday(student.birthdate)}</p>
                         <p>Home Address: {student.homeAddress}</p>
                         <p>Nationality: {student.nationality}</p>
                         <p>Legal Guardian: {student.legalGuardian}</p>
