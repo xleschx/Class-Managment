@@ -1,5 +1,5 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
+import './App.css';
 import { getClasses, updateClass, deleteClass, getStudentsByClassId } from './api/classApi';
 import { updateStudent, deleteStudent } from './api/studentApi';
 import CreateClass from './components/class/CreateClass';
@@ -114,120 +114,122 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Class Management</h1>
       <CreateClass onClassCreated={handleCreateClass} />
       <CreateStudent classes={classes} onStudentCreated={handleCreateStudent} />
 
-      <h2>Classes</h2>
-      <ul>
-        {classes.map((cls) => (
-          <li key={cls._id}>
-            {editingClass?._id === cls._id ? (
-              <div className="editing">
-                <input
-                  type="text"
-                  value={editingClass.name}
-                  onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.room}
-                  onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.location}
-                  onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.gradeLevel}
-                  onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
-                />
-                <button onClick={() => handleUpdateClass(cls._id)}>Save</button>
-                <button onClick={() => setEditingClass(null)}>Cancel</button>
-              </div>
-            ) : (
-              <>
-                <h3>{cls.name}</h3>
-                <p>Room: {cls.room}</p>
-                <p>Location: {cls.location}</p>
-                <p>Grade Level: {cls.gradeLevel}</p>
-                <button onClick={() => handleEditClass(cls)}>Edit</button>
-                <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
-              </>
-            )}
+      <div className="section">
+        <h2>Classes</h2>
+        <ul>
+          {classes.map((cls) => (
+            <li className="class" key={cls._id}>
+              {editingClass?._id === cls._id ? (
+                <div className="editing">
+                  <input
+                    type="text"
+                    value={editingClass.name}
+                    onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.room}
+                    onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.location}
+                    onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.gradeLevel}
+                    onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
+                  />
+                  <button className="button" onClick={() => handleUpdateClass(cls._id)}>Save</button>
+                  <button className="button" onClick={() => setEditingClass(null)}>Cancel</button>
+                </div>
+              ) : (
+                <>
+                  <h3>{cls.name}</h3>
+                  <p>Room: {cls.room}</p>
+                  <p>Location: {cls.location}</p>
+                  <p>Grade Level: {cls.gradeLevel}</p>
+                  <button className="button" onClick={() => handleEditClass(cls)}>Edit</button>
+                  <button className="button" onClick={() => handleDeleteClass(cls._id)}>Delete</button>
+                </>
+              )}
 
-            <ul>
-              {studentsByClass[cls._id] &&
-                studentsByClass[cls._id].map((student) => (
-                  <li key={student._id}>
-                    {editingStudent?._id === student._id ? (
-                      <div className="editing">
-                        <input
-                          type="text"
-                          value={editingStudent.name}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.subName}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
-                        />
-                        <input
-                          type="date"
-                          value={editingStudent.birthdate}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.address?.street || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.address?.city || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.address?.plz || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, plz: e.target.value } })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.nationality}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, nationality: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.legalGuardian}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, legalGuardian: e.target.value })}
-                        />
-                        <button onClick={() => handleUpdateStudent(student._id)}>Save</button>
-                        <button onClick={() => setEditingStudent(null)}>Cancel</button>
-                      </div>
-                    ) : (
-                      <>
-                        <h4>{student.name}</h4>
-                        <p>Sub Name: {student.subName}</p>
-                        <p>Birthdate: {student.birthdate}</p>
-                        <p>
-                          Address: {student.address?.street || ''}, {student.address?.city || ''}, {student.address?.plz || ''}
-                        </p>
-                        <p>Nationality: {student.nationality}</p>
-                        <p>Legal Guardian: {student.legalGuardian}</p>
-                        <button onClick={() => handleEditStudent(student)}>Edit</button>
-                        <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
-                      </>
-                    )}
-                  </li>
-                ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+              <ul>
+                {studentsByClass[cls._id] &&
+                  studentsByClass[cls._id].map((student) => (
+                    <li className="student" key={student._id}>
+                      {editingStudent?._id === student._id ? (
+                        <div className="editing">
+                          <input
+                            type="text"
+                            value={editingStudent.name}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.subName}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
+                          />
+                          <input
+                            type="date"
+                            value={editingStudent.birthdate}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.street || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.city || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.plz || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, plz: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.nationality}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, nationality: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.legalGuardian}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, legalGuardian: e.target.value })}
+                          />
+                          <button className="button" onClick={() => handleUpdateStudent(student._id)}>Save</button>
+                          <button className="button" onClick={() => setEditingStudent(null)}>Cancel</button>
+                        </div>
+                      ) : (
+                        <>
+                          <h4>{student.name}</h4>
+                          <p>Sub Name: {student.subName}</p>
+                          <p>Birthdate: {student.birthdate}</p>
+                          <p>
+                            Address: {student.address?.street || ''}, {student.address?.city || ''}, {student.address?.plz || ''}
+                          </p>
+                          <p>Nationality: {student.nationality}</p>
+                          <p>Legal Guardian: {student.legalGuardian}</p>
+                          <button className="button" onClick={() => handleEditStudent(student)}>Edit</button>
+                          <button className="button" onClick={() => handleDeleteStudent(student._id)}>Delete</button>
+                        </>
+                      )}
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

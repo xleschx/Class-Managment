@@ -60,7 +60,7 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
         value={newStudentBirthdate}
         onChange={(e) => setNewStudentBirthdate(e.target.value)}
       />
-    <input
+      <input
         type="text"
         placeholder="PLZ"
         value={newStudentAddress.plz}
