@@ -48,7 +48,11 @@ const createDatabase = async () => {
         name: `Student ${i}`,
         subName: `SubName ${i}`,
         birthdate: new Date(2000, i % 12, i),
-        homeAddress: `Home Address ${i}`,
+        address: {
+          plz: `${i}`,
+          street: `Street ${i}`,
+          city: `City ${i}`
+        },
         nationality: `Nationality ${i}`,
         legalGuardian: `Legal Guardian ${i}`,
         classId: classes[classIndex]._id,

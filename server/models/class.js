@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
+  const mongoose = require('mongoose');
 
-const classSchema = new mongoose.Schema({
-  name: String,
-  room: String,
-  location: String,
-  gradeLevel: String,
-  students: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student',
-    },
-  ],
-});
+  const classSchema = new mongoose.Schema({
+    name: String,
+    room: String,
+    location: String,
+    gradeLevel: String,
+    students: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student',
+      },
+    ],
+  });
 
-const Class = mongoose.model('Class', classSchema);
+  const Class = mongoose.model('Class', classSchema);
 
-module.exports = { Class };
+  module.exports = { Class };
