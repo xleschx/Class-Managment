@@ -1,6 +1,6 @@
-// class/createClass.js
 import React, { useState } from 'react';
 import { createClass } from '../../api/classApi';
+import './CreateClass.css';
 
 const CreateClass = ({ onClassCreated }) => {
   const [newClassName, setNewClassName] = useState('');
@@ -27,7 +27,7 @@ const CreateClass = ({ onClassCreated }) => {
   };
 
   return (
-    <div>
+    <div className="createClass">
       <h2>Create Class</h2>
       <input
         type="text"

@@ -1,0 +1,29 @@
+/* CreateStudent.css */
+
+.createStudent {
+  background-color: #eaeaea;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.createStudent h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.createStudent input,
+.createStudent select {
+  margin-bottom: 5px;
+}
+
+.createStudent button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.createStudent button:hover {
+  background-color: #45a049;
+}
