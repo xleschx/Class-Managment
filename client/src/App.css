@@ -61,3 +61,71 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
+/* App.css */
+
+/* Main container styles */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Section styles */
+.section {
+  margin-bottom: 20px;
+}
+
+/* Class styles */
+.class {
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.class h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.class p {
+  margin: 5px 0;
+}
+
+.editing input {
+  margin-bottom: 5px;
+}
+
+/* Student styles */
+.student {
+  background-color: #eaeaea;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.student h4 {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+.student p {
+  margin: 3px 0;
+}
+
+.editing input {
+  margin-bottom: 3px;
+}
+
+/* Button styles */
+.button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.button:hover {
+  background-color: #45a049;
+}

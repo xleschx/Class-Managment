@@ -29,7 +29,8 @@ const App = () => {
   // Fetch classes
   useEffect(() => {
     fetchClasses();
-  }, []);
+  }, [fetchClasses]);
+  
 
   // Fetch students by class ID from the server
   const fetchStudentsByClassId = async (classId) => {
@@ -96,8 +97,8 @@ const App = () => {
     }
   };
 
-  // Create a class
-  const handleCreateClass = async () => {
+   // Create a class
+   const handleCreateClass = async () => {
     try {
       fetchClasses();
     } catch (error) {
@@ -118,7 +119,10 @@ const App = () => {
     <div>
       <h1>Class Management</h1>
       <CreateClass onClassCreated={handleCreateClass} />
-      <CreateStudent classes={classes} onStudentCreated={handleCreateStudent} />
+      <CreateStudent
+        classes={classes}
+        onStudentCreated={handleCreateStudent}
+      />
 
       <h2>Classes</h2>
       <ul>
@@ -183,18 +187,8 @@ const App = () => {
                         />
                         <input
                           type="text"
-                          value={editingStudent.address?.street || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.address?.city || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.address?.plz || ''}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, plz: e.target.value } })}
+                          value={editingStudent.homeAddress}
+                          onChange={(e) => setEditingStudent({ ...editingStudent, homeAddress: e.target.value })}
                         />
                         <input
                           type="text"
@@ -229,6 +223,7 @@ const App = () => {
       </ul>
     </div>
   );
+
 };
 
 export default App;

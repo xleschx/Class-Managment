@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createStudent } from '../../api/studentApi';
+import './CreateStudent.css';
 
 const CreateStudent = ({ onStudentCreated, classes }) => {
   const [newStudentName, setNewStudentName] = useState('');
@@ -40,7 +41,7 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
   };
 
   return (
-    <div>
+    <div className="createStudent">
       <h2>Create Student</h2>
       <input
         type="text"
@@ -60,7 +61,7 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
         value={newStudentBirthdate}
         onChange={(e) => setNewStudentBirthdate(e.target.value)}
       />
-    <input
+      <input
         type="text"
         placeholder="PLZ"
         value={newStudentAddress.plz}
