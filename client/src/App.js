@@ -1,9 +1,9 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { getClasses, updateClass, deleteClass, getStudentsByClassId } from '../api/classApi';
-import { updateStudent, deleteStudent } from '../api/studentApi';
-import CreateClass from './class/CreateClass';
-import CreateStudent from './student/CreateStudent';
+import { getClasses, updateClass, deleteClass, getStudentsByClassId } from './api/classApi';
+import { updateStudent, deleteStudent } from './api/studentApi';
+import CreateClass from './components/class/CreateClass';
+import CreateStudent from './components/student/CreateStudent';
 
 const App = () => {
   const [classes, setClasses] = useState([]);
