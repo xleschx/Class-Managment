@@ -11,26 +11,26 @@ const App = () => {
   const [editingClass, setEditingClass] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
 
-    // Fetch classes from the server
-    const fetchClasses = async () => {
-      try {
-        const classes = await getClasses();
-        setClasses(classes);
-        // Fetch students for each class
-        classes.forEach((cls) => {
-          fetchStudentsByClassId(cls._id);
-        });
-      } catch (error) {
-        console.error('Error fetching classes:', error);
-      }
-    };
-  
-    
+  // Fetch classes from the server
+  const fetchClasses = async () => {
+    try {
+      const classes = await getClasses();
+      setClasses(classes);
+      // Fetch students for each class
+      classes.forEach((cls) => {
+        fetchStudentsByClassId(cls._id);
+      });
+    } catch (error) {
+      console.error('Error fetching classes:', error);
+    }
+  };
+
+
   // Fetch classes
   useEffect(() => {
     fetchClasses();
   }, [fetchClasses]);
-  
+
 
   // Fetch students by class ID from the server
   const fetchStudentsByClassId = async (classId) => {
@@ -97,8 +97,8 @@ const App = () => {
     }
   };
 
-   // Create a class
-   const handleCreateClass = async () => {
+  // Create a class
+  const handleCreateClass = async () => {
     try {
       fetchClasses();
     } catch (error) {
@@ -118,125 +118,136 @@ const App = () => {
   //Change dateformat to right format
   const formatedBirthday = (studentBirthdate) => {
     var d = new Date(studentBirthdate),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
     return [year, month, day].join('-');
-}
+  }
 
-  
+
   return (
-    <div>
+    <div className="container">
       <h1>Class Management</h1>
       <CreateClass onClassCreated={handleCreateClass} />
-      <CreateStudent
-        classes={classes}
-        onStudentCreated={handleCreateStudent}
-      />
+      <CreateStudent classes={classes} onStudentCreated={handleCreateStudent} />
 
-      <h2>Classes</h2>
-      <ul>
-        {classes.map((cls) => (
-          <li key={cls._id}>
-            {editingClass?._id === cls._id ? (
-              <div className="editing">
-                <input
-                  type="text"
-                  value={editingClass.name}
-                  onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.room}
-                  onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.location}
-                  onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
-                />
-                <input
-                  type="text"
-                  value={editingClass.gradeLevel}
-                  onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
-                />
-                <button onClick={() => handleUpdateClass(cls._id)}>Save</button>
-                <button onClick={() => setEditingClass(null)}>Cancel</button>
-              </div>
-            ) : (
-              <>
-                <h3>{cls.name}</h3>
-                <p>Room: {cls.room}</p>
-                <p>Location: {cls.location}</p>
-                <p>Grade Level: {cls.gradeLevel}</p>
-                <button onClick={() => handleEditClass(cls)}>Edit</button>
-                <button onClick={() => handleDeleteClass(cls._id)}>Delete</button>
-              </>
-            )}
+      <div className="section">
+        <h2>Classes</h2>
+        <ul>
+          {classes.map((cls) => (
+            <li className="class" key={cls._id}>
+              {editingClass?._id === cls._id ? (
+                <div className="editing">
+                  <input
+                    type="text"
+                    value={editingClass.name}
+                    onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.room}
+                    onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.location}
+                    onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    value={editingClass.gradeLevel}
+                    onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
+                  />
+                  <button className="button" onClick={() => handleUpdateClass(cls._id)}>Save</button>
+                  <button className="button" onClick={() => setEditingClass(null)}>Cancel</button>
+                </div>
+              ) : (
+                <>
+                  <h3>{cls.name}</h3>
+                  <p>Room: {cls.room}</p>
+                  <p>Location: {cls.location}</p>
+                  <p>Grade Level: {cls.gradeLevel}</p>
+                  <button className="button" onClick={() => handleEditClass(cls)}>Edit</button>
+                  <button className="button" onClick={() => handleDeleteClass(cls._id)}>Delete</button>
+                </>
+              )}
 
-            <ul>
-              {studentsByClass[cls._id] &&
-                studentsByClass[cls._id].map((student) => (
-                  <li key={student._id}>
-                    {editingStudent?._id === student._id ? (
-                      <div className="editing">
-                        <input
-                          type="text"
-                          value={editingStudent.name}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.subName}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
-                        />
-                        <input
-                          type="date"
-                          value={editingStudent.birthdate}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.homeAddress}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, homeAddress: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.nationality}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, nationality: e.target.value })}
-                        />
-                        <input
-                          type="text"
-                          value={editingStudent.legalGuardian}
-                          onChange={(e) => setEditingStudent({ ...editingStudent, legalGuardian: e.target.value })}
-                        />
-                        <button onClick={() => handleUpdateStudent(student._id)}>Save</button>
-                        <button onClick={() => setEditingStudent(null)}>Cancel</button>
-                      </div>
-                    ) : (
-                      <>
-                        <h4>{student.name}</h4>
-                        <p>Sub Name: {student.subName}</p>
-                        <p>Birthdate: {formatedBirthday(student.birthdate)}</p>
-                        <p>Home Address: {student.homeAddress}</p>
-                        <p>Nationality: {student.nationality}</p>
-                        <p>Legal Guardian: {student.legalGuardian}</p>
-                        <button onClick={() => handleEditStudent(student)}>Edit</button>
-                        <button onClick={() => handleDeleteStudent(student._id)}>Delete</button>
-                      </>
-                    )}
-                  </li>
-                ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+              <ul>
+                {studentsByClass[cls._id] &&
+                  studentsByClass[cls._id].map((student) => (
+                    <li className="student" key={student._id}>
+                      {editingStudent?._id === student._id ? (
+                        <div className="editing">
+                          <input
+                            type="text"
+                            value={editingStudent.name}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.subName}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
+                          />
+                          <input
+                            type="date"
+                            value={editingStudent.birthdate}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.street || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.city || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.address?.plz || ''}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, plz: e.target.value } })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.nationality}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, nationality: e.target.value })}
+                          />
+                          <input
+                            type="text"
+                            value={editingStudent.legalGuardian}
+                            onChange={(e) => setEditingStudent({ ...editingStudent, legalGuardian: e.target.value })}
+                          />
+                          <button className="button" onClick={() => handleUpdateStudent(student._id)}>Save</button>
+                          <button className="button" onClick={() => setEditingStudent(null)}>Cancel</button>
+                        </div>
+                      ) : (
+                        <>
+                          <h4>{student.name}</h4>
+                          <p>Sub Name: {student.subName}</p>
+                          <p>Birthdate: {formatedBirthday(student.birthdate)}</p>
+                          <p>
+                            Address: {student.address?.street || ''}, {student.address?.city || ''}, {student.address?.plz || ''}
+                          </p>
+                          <p>Nationality: {student.nationality}</p>
+                          <p>Legal Guardian: {student.legalGuardian}</p>
+                          <button className="button" onClick={() => handleEditStudent(student)}>Edit</button>
+                          <button className="button" onClick={() => handleDeleteStudent(student._id)}>Delete</button>
+                       </>
+                      )}
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 
