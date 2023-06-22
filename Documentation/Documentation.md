@@ -48,16 +48,30 @@ Diese Datenbankstruktur ermöglicht es, die Beziehungen zwischen Klassen und Sch
 ### Class 
 
 *find*
-![databse](./img/class-find.png)
+![find class](./img/class-find.png)
 
 *update*
-![databse](./img/class-find.png)
+![update class](./img/class-update.png)
 
 *create*
-![databse](./img/class-find.png)
+![create class](./img/class-create.png)
 
 *delete*
-![databse](./img/class-find.png)
+![delete class](./img/class-delete.png)
+
+### Student 
+
+*find*
+![find student](./img/student-find.png)
+
+*update*
+![update student](./img/student-update.png)
+
+*create*
+![create student](./img/student-create.png)
+
+*delete*
+![delete student](./img/student-delete.png)
 
 # Zusammenfassung des Backends
 
