@@ -9,8 +9,14 @@ Ein wichtiger Bestandteil der Dokumentation ist das Arbeitsjournal, in dem wir a
 Die Applikation, die im Projekt entwickelt wird, greift auf eine MongoDB-Datenbank zu und ermöglicht das Anzeigen, Erstellen, Bearbeiten und Löschen von Dokumenten in der MongoDB-Datenbank Dabei werden zwei Collections mit einer 1:m-Beziehung oder Sub-Dokumente verwendet. Die Applikation soll benutzerfreundlich sein, Fehlererkennung bieten und Testdaten enthalten. 
 
 # Arbeitsjournal
-
-[weiteres-dokument.md](weiteres-dokument.md) 
+### 08.06.2023
+[Erster Tag des Projektes](./Journal's/JournalDayOne.md) 
+### 15.06.2023
+[Der 2. Tag](./Journal's/JournalDayTwo.md) 
+### 22.06.2023
+[Letzer Tag in der Schule](./Journal's/JournalDayThree.md) 
+### 23.06.2023
+[Der Tag der Abgabe](./Journal's/JournalDayLevy.md) 
 
 # Zusammenfassung der Datenbankstruktur
 
