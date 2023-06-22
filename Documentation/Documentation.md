@@ -45,6 +45,20 @@ Diese Datenbankstruktur ermöglicht es, die Beziehungen zwischen Klassen und Sch
 
 ## DB bearbeiten
 
+### Class 
+
+*find*
+![databse](./img/class-find.png)
+
+*update*
+![databse](./img/class-find.png)
+
+*create*
+![databse](./img/class-find.png)
+
+*delete*
+![databse](./img/class-find.png)
+
 # Zusammenfassung des Backends
 
 Das Backend des Klassenmanagementsystems besteht aus Node.js-Dateien, die Express verwenden und mit einer MongoDB-Datenbank interagieren. Die wichtigsten Dateien und Funktionen sind:
@@ -60,33 +74,15 @@ Das Backend des Klassenmanagementsystems besteht aus Node.js-Dateien, die Expres
 Das Backend ermöglicht das Erstellen, Aktualisieren, Löschen und Abrufen von Klassen und Schülern über die bereitgestellten API-Endpunkte. Die Datenbankinteraktion erfolgt über die Mongoose-Modelle, die eine Abstraktionsschicht über der MongoDB-Datenbank bieten.
 
 
-
-# Zusammenfassung des GUI-Codes
+## Zusammenfassung des GUI-Codes
 
 Der gegebene Code implementiert ein GUI für das Klassenmanagement-System. Es basiert auf React und verwendet verschiedene Komponenten und API-Aufrufe, um mit dem Backend zu interagieren.
 
+- Die `App`-Komponente ist die Hauptkomponente, die den gesamten Inhalt der Anwendung enthält. Sie verwaltet den Zustand der Klassen, Schüler und der bearbeiteten Klasse/Schüler.
+- Es gibt API-Funktionen (`classApi.js` und `studentApi.js`), die HTTP-Anfragen an das Backend senden, um Klassen und Schüler zu erstellen, zu aktualisieren, zu löschen und abzurufen.
+- Die `CreateClass`-Komponente enthält ein Formular zum Erstellen einer neuen Klasse.
+- Die `CreateStudent`-Komponente enthält ein Formular zum Erstellen eines neuen Schülers.
+- Die restlichen Komponenten und Funktionen ermöglichen die Darstellung und Interaktion mit den Daten im GUI.
+
+Die wichtigsten Funktionen sind das Abrufen von Klassen und Schülern vom Server, das Aktualisieren und Löschen von Klassen und Schülern, sowie das Erstellen neuer Klassen und Schüler über die API-Funktionen.
 ![Class](./img/gui.png)
-
-## App-Komponente
-
-Die `App`-Komponente ist die Hauptkomponente, die den gesamten Inhalt der Anwendung enthält. Sie verwaltet den Zustand der Klassen, Schüler und der bearbeiteten Klasse/Schüler mithilfe des `useState`-Hooks. Die Komponente implementiert folgende Funktionen:
-
-- `fetchClasses`: Ruft Klassen vom Server ab und ruft `fetchStudentsByClassId` für jede Klasse auf, um die zugehörigen Schüler abzurufen.
-- `useEffect`: Ruft `fetchClasses` einmalig auf, wenn die Komponente geladen wird.
-- `fetchStudentsByClassId`: Ruft Schüler anhand der Klassen-ID vom Server ab und aktualisiert den entsprechenden Zustand.
-- `handleEditClass` und `handleEditStudent`: Aktualisieren den Zustand der bearbeiteten Klasse bzw. des bearbeiteten Schülers.
-- `handleUpdateClass`, `handleUpdateStudent`, `handleDeleteClass` und `handleDeleteStudent`: Aktualisieren bzw. löschen eine Klasse oder einen Schüler über die entsprechenden API-Aufrufe.
-- `handleCreateClass` und `handleCreateStudent`: Erstellen eine neue Klasse bzw. einen neuen Schüler über die entsprechenden API-Aufrufe.
-- `formatedBirthday`: Formatieren des Geburtsdatums eines Schülers in das richtige Format.
-
-## API-Funktionen
-
-Es gibt zwei Dateien, die API-Funktionen enthalten: `classApi.js` und `studentApi.js`. Diese Funktionen ermöglichen die Kommunikation mit dem Backend und enthalten Methoden zum Erstellen, Aktualisieren, Löschen und Abrufen von Klassen und Schülern über HTTP-Anfragen an die entsprechenden Endpunkte.
-
-## CreateClass- und CreateStudent-Komponenten
-
-Diese Komponenten implementieren jeweils ein Formular zum Erstellen einer neuen Klasse bzw. eines neuen Schülers. Sie verwenden die entsprechenden API-Funktionen, um die Daten an das Backend zu senden.
-
-Der Rest des Codes besteht aus JSX-Markup und ermöglicht die Darstellung und Interaktion mit den Daten im GUI.
-
-
