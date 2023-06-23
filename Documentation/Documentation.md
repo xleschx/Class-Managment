@@ -50,42 +50,41 @@ Die "Class"-Sammlung enthält Informationen über die Klassen, einschließlich i
 Diese Datenbankstruktur ermöglicht es, die Beziehungen zwischen Klassen und Schülern effizient zu verwalten und abzufragen, indem Referenzen verwendet werden, um auf die relevanten Dokumente in den jeweiligen Sammlungen zu verweisen.
 
 ## DB bearbeiten
-
 ### Class 
 
 **find class**
 
-![find class](./img/class-find.png)
+<img src="./img/class-find.png" alt="find class" width="300"/>
 
 **update class**
 
-![update class](./img/class-update.png)
+<img src="./img/class-update.png" alt="update class" width="500"/>
 
 **create class**
 
-![create class](./img/class-create.png)
+<img src="./img/class-create.png" alt="create class" width="300"/>
 
 **delete class**
 
-![delete class](./img/class-delete.png)
+<img src="./img/class-delete.png" alt="delete class" width="400"/>
 
 ### Student 
 
 **find student**
 
-![find student](./img/student-find.png)
+<img src="./img/student-find.png" alt="find student" width="300"/>
 
 **update student**
 
-![update student](./img/student-update.png)
+<img src="./img/student-update.png" alt="update student" width="400"/>
 
 **create student**
 
-![update student](./img/student-create.png)
+<img src="./img/student-create.png" alt="create student" width="300"/>
 
 **delete student**
 
-![delete student](./img/student-delete.png)
+<img src="./img/student-delete.png" alt="delete student" width="400"/>
 
 # Zusammenfassung des Backends
 
@@ -113,4 +112,8 @@ Der gegebene Code implementiert ein GUI für das Klassenmanagement-System. Es ba
 - Die restlichen Komponenten und Funktionen ermöglichen die Darstellung und Interaktion mit den Daten im GUI.
 
 Die wichtigsten Funktionen sind das Abrufen von Klassen und Schülern vom Server, das Aktualisieren und Löschen von Klassen und Schülern, sowie das Erstellen neuer Klassen und Schüler über die API-Funktionen.
+
+
 ![Class](./img/gui.png)
+
+***Auf dieser Webseite besteht die Möglichkeit, Klassen und Schüler zu erstellen. Während des Erstellungsprozesses können Schüler bestimmten Klassen zugewiesen werden. Darüber hinaus können alle erstellten Klassen und Schüler aktualisiert und gelöscht werden. Die Webseite zeigt zudem eine Liste aller Klassen an, unter denen die jeweilig zugehörigen Schüler aufgeführt sind.***
