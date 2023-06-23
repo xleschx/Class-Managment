@@ -8,7 +8,9 @@ const CreateClass = ({ onClassCreated }) => {
   const [newClassLocation, setNewClassLocation] = useState('');
   const [newClassGrade, setNewClassGrade] = useState('');
 
-  const handleCreateClass = async () => {
+  const handleCreateClass = async (event) => {
+    event.preventDefault(); // This prevents the default form submission behavior.
+
     try {
       const newClass = await createClass({
         name: newClassName,
@@ -16,6 +18,7 @@ const CreateClass = ({ onClassCreated }) => {
         location: newClassLocation,
         gradeLevel: newClassGrade,
       });
+
       onClassCreated(newClass);
       setNewClassName('');
       setNewClassRoom('');
@@ -29,31 +32,39 @@ const CreateClass = ({ onClassCreated }) => {
   return (
     <div className="createClass">
       <h2>Create Class</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={newClassName}
-        onChange={(e) => setNewClassName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Room"
-        value={newClassRoom}
-        onChange={(e) => setNewClassRoom(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Location"
-        value={newClassLocation}
-        onChange={(e) => setNewClassLocation(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Grade Level"
-        value={newClassGrade}
-        onChange={(e) => setNewClassGrade(e.target.value)}
-      />
-      <button onClick={handleCreateClass}>Create</button>
+      <form onSubmit={handleCreateClass}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={newClassName}
+          onChange={(e) => setNewClassName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Room"
+          value={newClassRoom}
+          onChange={(e) => setNewClassRoom(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          value={newClassLocation}
+          onChange={(e) => setNewClassLocation(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Grade Level"
+          value={newClassGrade}
+          onChange={(e) => setNewClassGrade(e.target.value)}
+          required
+          pattern="\d+" // The pattern \d+ matches any positive integer.
+          title="Grade Level must be a positive integer"
+        />
+        <button type="submit">Create</button>
+      </form>
     </div>
   );
 };

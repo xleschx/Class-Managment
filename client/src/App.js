@@ -25,12 +25,10 @@ const App = () => {
     }
   };
 
-
   // Fetch classes
   useEffect(() => {
     fetchClasses();
   }, [fetchClasses]);
-
 
   // Fetch students by class ID from the server
   const fetchStudentsByClassId = async (classId) => {
@@ -115,7 +113,7 @@ const App = () => {
     }
   };
 
-  //Change dateformat to right format
+  // Change date format to right format
   const formatedBirthday = (studentBirthdate) => {
     var d = new Date(studentBirthdate),
       month = '' + (d.getMonth() + 1),
@@ -143,30 +141,36 @@ const App = () => {
           {classes.map((cls) => (
             <li className="class" key={cls._id}>
               {editingClass?._id === cls._id ? (
-                <div className="editing">
-                  <input
-                    type="text"
-                    value={editingClass.name}
-                    onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    value={editingClass.room}
-                    onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    value={editingClass.location}
-                    onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    value={editingClass.gradeLevel}
-                    onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
-                  />
-                  <button className="button" onClick={() => handleUpdateClass(cls._id)}>Save</button>
-                  <button className="button" onClick={() => setEditingClass(null)}>Cancel</button>
-                </div>
+                <form onSubmit={(e) => { e.preventDefault(); handleUpdateClass(cls._id); }}>
+                  <div className="editing">
+                    <input
+                      type="text"
+                      value={editingClass.name}
+                      onChange={(e) => setEditingClass({ ...editingClass, name: e.target.value })}
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={editingClass.room}
+                      onChange={(e) => setEditingClass({ ...editingClass, room: e.target.value })}
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={editingClass.location}
+                      onChange={(e) => setEditingClass({ ...editingClass, location: e.target.value })}
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={editingClass.gradeLevel}
+                      onChange={(e) => setEditingClass({ ...editingClass, gradeLevel: e.target.value })}
+                      required
+                    />
+                    <button type="submit" className="button">Save</button>
+                    <button type="button" className="button" onClick={() => setEditingClass(null)}>Cancel</button>
+                  </div>
+                </form>
               ) : (
                 <>
                   <h3>{cls.name}</h3>
@@ -183,63 +187,56 @@ const App = () => {
                   studentsByClass[cls._id].map((student) => (
                     <li className="student" key={student._id}>
                       {editingStudent?._id === student._id ? (
-                        <div className="editing">
-                          <input
-                            type="text"
-                            value={editingStudent.name}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.subName}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
-                          />
-                          <input
-                            type="date"
-                            value={editingStudent.birthdate}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.address?.street || ''}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.address?.city || ''}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.address?.plz || ''}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, plz: e.target.value } })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.nationality}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, nationality: e.target.value })}
-                          />
-                          <input
-                            type="text"
-                            value={editingStudent.legalGuardian}
-                            onChange={(e) => setEditingStudent({ ...editingStudent, legalGuardian: e.target.value })}
-                          />
-                          <button className="button" onClick={() => handleUpdateStudent(student._id)}>Save</button>
-                          <button className="button" onClick={() => setEditingStudent(null)}>Cancel</button>
-                        </div>
+                        <form onSubmit={(e) => { e.preventDefault(); handleUpdateStudent(student._id); }}>
+                          <div className="editing">
+                            <input
+                              type="text"
+                              value={editingStudent.name}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+                              required
+                            />
+                            <input
+                              type="text"
+                              value={editingStudent.subName}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, subName: e.target.value })}
+                              required
+                            />
+                            <input
+                              type="date"
+                              value={editingStudent.birthdate}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, birthdate: e.target.value })}
+                              required
+                            />
+                            <input
+                              type="text"
+                              value={editingStudent.address?.street || ''}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, street: e.target.value } })}
+                              required
+                            />
+                            <input
+                              type="text"
+                              value={editingStudent.address?.city || ''}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, city: e.target.value } })}
+                              required
+                            />
+                            <input
+                              type="text"
+                              value={editingStudent.address?.country || ''}
+                              onChange={(e) => setEditingStudent({ ...editingStudent, address: { ...editingStudent.address, country: e.target.value } })}
+                              required
+                            />
+                            <button type="submit" className="button">Save</button>
+                            <button type="button" className="button" onClick={() => setEditingStudent(null)}>Cancel</button>
+                          </div>
+                        </form>
                       ) : (
                         <>
-                          <h4>{student.name}</h4>
-                          <p>Sub Name: {student.subName}</p>
+                          <h4>{student.name} {student.subName}</h4>
                           <p>Birthdate: {formatedBirthday(student.birthdate)}</p>
-                          <p>
-                            Address: {student.address?.street || ''}, {student.address?.city || ''}, {student.address?.plz || ''}
-                          </p>
-                          <p>Nationality: {student.nationality}</p>
-                          <p>Legal Guardian: {student.legalGuardian}</p>
+                          <p>Address: {student.address?.street}, {student.address?.city}, {student.address?.country}</p>
                           <button className="button" onClick={() => handleEditStudent(student)}>Edit</button>
                           <button className="button" onClick={() => handleDeleteStudent(student._id)}>Delete</button>
-                       </>
+                        </>
                       )}
                     </li>
                   ))}
@@ -250,7 +247,6 @@ const App = () => {
       </div>
     </div>
   );
-
 };
 
 export default App;
