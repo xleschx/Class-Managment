@@ -10,13 +10,13 @@ Die Applikation, die im Projekt entwickelt wird, greift auf eine MongoDB-Datenba
 
 # Arbeitsjournal
 ### 08.06.2023
-[Erster Tag des Projektes](./Journal's/JournalDayOne.md) 
+[Erster Tag des Projektes](./Journal's/01_JournalDayOne.md) 
 ### 15.06.2023
-[Der 2. Tag](./Journal's/JournalDayTwo.md) 
+[Der 2. Tag](./Journal's/02_JournalDayTwo.md) 
 ### 22.06.2023
-[Letzer Tag in der Schule](./Journal's/JournalDayThree.md) 
+[Letzer Tag in der Schule](./Journal's/03_JournalDayThree.md) 
 ### 23.06.2023
-[Der Tag der Abgabe](./Journal's/JournalDayLevy.md) 
+[Der Tag der Abgabe](./Journal's/04_JournalDayOfLevy.md) 
 
 # Zusammenfassung der Datenbankstruktur
 
