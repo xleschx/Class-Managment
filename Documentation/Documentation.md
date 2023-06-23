@@ -118,16 +118,16 @@ Die wichtigsten Funktionen sind das Abrufen von Klassen und Schülern vom Server
 
 ***Auf dieser Webseite besteht die Möglichkeit, Klassen und Schüler zu erstellen. Während des Erstellungsprozesses können Schüler bestimmten Klassen zugewiesen werden. Darüber hinaus können alle erstellten Klassen und Schüler aktualisiert und gelöscht werden. Die Webseite zeigt zudem eine Liste aller Klassen an, unter denen die jeweilig zugehörigen Schüler aufgeführt sind.***
 
-## Validierung
+### Validierung
 
-### Validierung Class
+**Validierung Class**
 ![Validierung Class](./img/validierung-class.png)
 
-### Validierung Student
+**Validierung Student**
 ![Validierung Student](./img/validierung-student.png)
 
-### Validierung Class Edit
+**Validierung Class Edit**
 ![Validierung Class Edit](./img/validierung-class-edit.png)
 
-### Validierung Student Edit
+**Validierung Student Edit**
 ![Validierung Student Edit](./img/validierung-student-edit.png)
