@@ -45,7 +45,7 @@ const CreateClass = ({ onClassCreated }) => {
           placeholder="Room"
           value={newClassRoom}
           onChange={(e) => setNewClassRoom(e.target.value)}
-  
+
         />
         <input
           type="text"
@@ -59,7 +59,7 @@ const CreateClass = ({ onClassCreated }) => {
           placeholder="Grade Level"
           value={newClassGrade}
           onChange={(e) => setNewClassGrade(e.target.value)}
-         
+
           pattern="\d+" // The pattern \d+ matches any positive integer.
           title="Grade Level must be a positive integer"
         />

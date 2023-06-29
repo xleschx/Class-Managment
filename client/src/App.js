@@ -139,7 +139,7 @@ const App = () => {
   const handleFavoriteStudent = (student) => {
     setFavoriteStudent(student);
   };
-           
+
 
   return (
     <div className="container">
@@ -192,7 +192,7 @@ const App = () => {
                   <button className="button" onClick={() => handleEditClass(cls)}>Edit</button>
                   <button className="button" onClick={() => handleDeleteClass(cls._id)}>Delete</button>
                   <button className="button" onClick={() => handleFavorite(cls)}>Favorite</button>
-              
+
                 </>
               )}
 
@@ -241,7 +241,7 @@ const App = () => {
                             />
                             <button type="submit" className="button">Save</button>
                             <button type="button" className="button" onClick={() => setEditingStudent(null)}>Cancel</button>
-                  
+
                           </div>
                         </form>
                       ) : (
@@ -252,7 +252,7 @@ const App = () => {
                           <button className="button" onClick={() => handleEditStudent(student)}>Edit</button>
                           <button className="button" onClick={() => handleDeleteStudent(student._id)}>Delete</button>
                           <button className="button" onClick={() => handleFavoriteStudent(student)}>Favorite</button>
-                   
+
                         </>
                       )}
                     </li>
@@ -283,7 +283,7 @@ const App = () => {
           </ul>
         </div>
       )}
-      
+
       {favoriteStudent && (
         <div className="section">
           <h2>Favorite Student</h2>
@@ -291,7 +291,8 @@ const App = () => {
           <p>Birthdate: {formatedBirthday(favoriteStudent.birthdate)}</p>
           <p>Address: {favoriteStudent.address?.street}, {favoriteStudent.address?.city}, {favoriteStudent.address?.country}</p>
         </div>
-      )}    </div>
+      )}
+    </div>
   );
 };
 

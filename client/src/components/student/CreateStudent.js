@@ -58,7 +58,7 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
           placeholder="Sub Name"
           value={newStudentSubName}
           onChange={(e) => setNewStudentSubName(e.target.value)}
-        
+
         />
         <input
           type="date"
@@ -72,35 +72,35 @@ const CreateStudent = ({ onStudentCreated, classes }) => {
           placeholder="PLZ"
           value={newStudentAddress.plz}
           onChange={(e) => setNewStudentAddress({ ...newStudentAddress, plz: e.target.value })}
-    
+
         />
         <input
           type="text"
           placeholder="Street"
           value={newStudentAddress.street}
           onChange={(e) => setNewStudentAddress({ ...newStudentAddress, street: e.target.value })}
-       
+
         />
         <input
           type="text"
           placeholder="City"
           value={newStudentAddress.city}
           onChange={(e) => setNewStudentAddress({ ...newStudentAddress, city: e.target.value })}
-      
+
         />
         <input
           type="text"
           placeholder="Nationality"
           value={newStudentNationality}
           onChange={(e) => setNewStudentNationality(e.target.value)}
-   
+
         />
         <input
           type="text"
           placeholder="Legal Guardian"
           value={newStudentLegalGuardian}
           onChange={(e) => setNewStudentLegalGuardian(e.target.value)}
-     
+
         />
         <select
           value={selectedClassId}
